@@ -1,0 +1,32 @@
+class MyQueue:
+    def __init__(self):
+        self.stack_enqueue = []
+        self.stack_dequeue = []
+
+    def enqueue(self, x):
+        self.stack_enqueue.append(x)
+
+    def dequeue(self):
+        self.move_to_dequeue()
+        return self.stack_dequeue.pop()
+
+    def peek(self):
+        self.move_to_dequeue()
+        return self.stack_dequeue[-1]
+
+    def move_to_dequeue(self):
+        if not self.stack_dequeue:
+            while self.stack_enqueue:
+                self.stack_dequeue.append(self.stack_enqueue.pop())
+
+# Main logic to process queries
+queue = MyQueue()
+queries = int(input().strip())
+for _ in range(queries):
+    query = input().strip().split()
+    if query[0] == '1':
+        queue.enqueue(int(query[1]))
+    elif query[0] == '2':
+        queue.dequeue()
+    elif query[0] == '3':
+        print(queue.peek())
